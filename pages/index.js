@@ -27,7 +27,9 @@ const IndexPageContent = (props) => {
           shows.map(show => {
             console.log(28, "show::", show);
             return (
-              <PostLink key={show.id} show={show} />
+              <div key={show.id}>
+                <PostLink show={show} />
+              </div>
             );
           })
         }
