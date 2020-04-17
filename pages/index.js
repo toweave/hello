@@ -1,32 +1,66 @@
 import Layout from '../components/Layout';
 import Link from 'next/link';
+import axios from 'axios'
 
-const PostLink = props => (
-  <li>
-    <Link href="/p/[id]" as={`/p/${props.id}`}>
-      <a>{props.id}</a>
-    </Link>
-  </li>
-);
+const PostLink = (props) => {
+  console.log(6, props);
+  const { show } = props || {};
+  return (
+    <li>
+      <Link href="/p/[id]" as={`/p/${show.id}`}>
+        <a>{show.name}</a>
+      </Link>
+    </li>
+  );
+};
 
-const IndexPageContent = props => (
-  <>
-    <p>Hello Next.js</p>
-    <h1>My Blog</h1>
-    <ul>
-      <PostLink id="hello-nextjs" />
-      <PostLink id="Learn Next.js is awesome" />
-      <PostLink id="Deploy apps with Zeit" />
-    </ul>
-  </>
-);
+const IndexPageContent = (props) => {
+  console.log(14, props);
+  const { shows = [] } = props || {};
+  console.log(20, shows);
+  return (
+    <>
+      <p>Hello Next.js</p>
+      <h1>My Blog</h1>
+      <ul>
+        {
+          shows.map(show => {
+            console.log(28, "show::", show);
+            return (
+              <PostLink key={show.id} show={show} />
+            );
+          })
+        }
+      </ul>
+    </>
+  );
+};
 
-export default function Index() {
+const Index = (props) => {
   return (
     <>
       <Layout>
-        <IndexPageContent />
+        <IndexPageContent shows={props.shows} />
       </Layout>
     </>
   );
-}
+};
+
+Index.getInitialProps = async function () {
+  const res = await axios
+    .get('https://api.tvmaze.com/search/shows?q=batman')
+    .catch((err) => {
+      console.log(10, err)
+    });
+  console.log(3666, res);
+  const { data = [] } = res || {};
+
+  console.log(`Show data fetched. Count: ${data.length}`);
+
+  return {
+    shows: data.map(entry => entry.show)
+  };
+};
+
+export default Index
+
