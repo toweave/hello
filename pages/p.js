@@ -19,6 +19,7 @@ const PostLink = (props) => {
           text-decoration: none;
           color: red;
         }
+6
 
         a:hover {
           opacity: 0.6;
@@ -69,12 +70,7 @@ export async function getStaticProps() {
   // will receive `posts` as a prop at build time
   return {
     props: {
-      shows: [
-        {
-          id: 999999,
-          name: 'test-99999'
-        }
-      ]
+      shows: data.map(entry => entry.show)
     },
   }
 }

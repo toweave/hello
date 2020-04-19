@@ -1,6 +1,6 @@
-import axios from 'axios'
 import { useRouter } from 'next/router';
 import Markdown from 'react-markdown';
+import axios from 'axios'
 import Layout from '../../components/Layout';
 
 
@@ -11,11 +11,12 @@ export async function getStaticPaths() {
       console.log(10, err)
     });
   const { data = [] } = res || {};
+  console.log(1414, data)
   return {
     paths: data.map(post => {
       return {
         params: {
-          id: `${post.id}`,
+          id: `${post.show.id}`,
         },
       }
     }),
@@ -31,8 +32,8 @@ export async function getStaticProps(context) {
     .catch((err) => {
       console.log(10, err)
     });
-  console.log(34, res)
-  const { data = [] } = res || {};
+  const { data = {} } = res || {};
+  console.log(3636, data)
   return {
     props: {show: data},
   }
@@ -40,9 +41,12 @@ export async function getStaticProps(context) {
 
 
 const Post = (props) => {
-  console.log(42, props);
+  console.log(4444, props)
   const router = useRouter();
   const { show = {} } = props || {};
+  if (router.isFallback) {
+    return <div>Loading...</div>
+  }
   return (
     <Layout>
       <h1>{show.name}</h1>
