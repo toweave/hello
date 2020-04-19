@@ -2,12 +2,18 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "export": "next export"
   },
   "dependencies": {
     "axios": "^0.19.2",
     "next": "^9.3.5",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "react-markdown": "^4.3.1",
+    "swr": "^0.2.0"
+  },
+  "devDependencies": {
+    "sass": "^1.26.3"
   }
 }

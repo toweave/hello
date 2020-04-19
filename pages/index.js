@@ -7,9 +7,24 @@ const PostLink = (props) => {
   const { show } = props || {};
   return (
     <li>
-      <Link href="/p/[id]" as={`/p/${show.id}`}>
+      <Link href="/p/[id]" as={`/p/${show.id}?a=234`}>
         <a>{show.name}</a>
       </Link>
+      <style jsx>{`
+        li {
+          list-style: none;
+          margin: 5px 0;
+        }
+
+        a {
+          text-decoration: none;
+          color: red;
+        }
+
+        a:hover {
+          opacity: 0.6;
+        }
+      `}</style>
     </li>
   );
 };
@@ -34,6 +49,13 @@ const IndexPageContent = (props) => {
           })
         }
       </ul>
+      <style jsx>{`
+        h1,
+        a {
+          font-family: 'Arial';
+          color: blue;
+        }
+      `}</style>
     </>
   );
 };
