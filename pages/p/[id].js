@@ -3,7 +3,44 @@ import { useRouter } from 'next/router';
 import Markdown from 'react-markdown';
 import Layout from '../../components/Layout';
 
+
+export async function getStaticPaths() {
+  const res = await axios
+    .get(`https://api.tvmaze.com/search/shows?q=batman`)
+    .catch((err) => {
+      console.log(10, err)
+    });
+  const { data = [] } = res || {};
+  return {
+    paths: data.map(post => {
+      return {
+        params: {
+          id: `${post.id}`,
+        },
+      }
+    }),
+    fallback: true,
+  }
+}
+
+export async function getStaticProps(context) {
+  const { params } = context
+  // fetch single post detail
+  const res = await axios
+    .get(`https://api.tvmaze.com/shows/${params.id}`)
+    .catch((err) => {
+      console.log(10, err)
+    });
+  console.log(34, res)
+  const { data = [] } = res || {};
+  return {
+    props: {show: data},
+  }
+}
+
+
 const Post = (props) => {
+  console.log(42, props);
   const router = useRouter();
   const { show = {} } = props || {};
   return (
@@ -47,18 +84,6 @@ const Post = (props) => {
       `}</style>
     </Layout>
   );
-};
-
-Post.getInitialProps = async function (context) {
-  const { id } = context.query;
-  const res = await axios
-    .get(`https://api.tvmaze.com/shows/${id}`)
-    .catch((err) => {
-      console.log(10, err)
-    });
-  const { data: show = {} } = res || {};
-
-  return { show };
 };
 
 export default Post

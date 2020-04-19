@@ -56,6 +56,24 @@ const IndexPageContent = (props) => {
   );
 };
 
+export async function getStaticProps() {
+  // Call an external API endpoint to get posts.
+  const res = await axios
+    .get(`https://api.tvmaze.com/search/shows?q=batman`)
+    .catch((err) => {
+      console.log(10, err)
+    });
+  const { data = [] } = res || {};
+
+  // By returning { props: posts }, the Blog component
+  // will receive `posts` as a prop at build time
+  return {
+    props: {
+      shows: data.map(entry => entry.show)
+    },
+  }
+}
+
 const Index = (props) => {
   return (
     <>
@@ -64,19 +82,6 @@ const Index = (props) => {
       </Layout>
     </>
   );
-};
-
-Index.getInitialProps = async function () {
-  const res = await axios
-    .get('https://api.tvmaze.com/search/shows?q=batman')
-    .catch((err) => {
-      console.log(10, err)
-    });
-  const { data = [] } = res || {};
-
-  return {
-    shows: data.map(entry => entry.show)
-  };
 };
 
 export default Index

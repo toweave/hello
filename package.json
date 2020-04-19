@@ -6,6 +6,7 @@
     "build": "next build",
     "start": "next start",
     "export": "next export",
+    "html": "next build && next export",
     "test": "serve out -p 5001"
   },
   "dependencies": {
