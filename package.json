@@ -1,9 +1,12 @@
 {
+  "name": "hello",
+  "main": "server.js",
   "scripts": {
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "export": "next export"
+    "export": "next export",
+    "test": "serve out -p 5001"
   },
   "dependencies": {
     "axios": "^0.19.2",

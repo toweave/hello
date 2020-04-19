@@ -3,7 +3,6 @@ import Link from 'next/link';
 import axios from 'axios'
 
 const PostLink = (props) => {
-  console.log(6, props);
   const { show } = props || {};
   return (
     <li>
@@ -30,9 +29,7 @@ const PostLink = (props) => {
 };
 
 const IndexPageContent = (props) => {
-  console.log(14, props);
   const { shows = [] } = props || {};
-  console.log(20, shows);
   return (
     <>
       <p>Hello Next.js</p>
@@ -40,7 +37,6 @@ const IndexPageContent = (props) => {
       <ul>
         {
           shows.map(show => {
-            console.log(28, "show::", show);
             return (
               <div key={show.id}>
                 <PostLink show={show} />
@@ -76,10 +72,7 @@ Index.getInitialProps = async function () {
     .catch((err) => {
       console.log(10, err)
     });
-  console.log(3666, res);
   const { data = [] } = res || {};
-
-  console.log(`Show data fetched. Count: ${data.length}`);
 
   return {
     shows: data.map(entry => entry.show)
